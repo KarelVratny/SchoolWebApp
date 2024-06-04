@@ -15,6 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
 
 //Predani kontroleru instanci service
 builder.Services.AddScoped<StudentService>();
+builder.Services.AddScoped<SubjectService>();
 
 var app = builder.Build();
 
