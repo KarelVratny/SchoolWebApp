@@ -12,36 +12,40 @@ namespace SchoolWebApp.Controllers {
 
 		public IActionResult Index() {
 			IEnumerable<SubjectDTO> allSubjects = _subjectService.GetSubjects();
-			return View(allStudents);
+			return View(allSubjects);
 		}
 		public IActionResult Create() {
 			return View();
 		}
 		[HttpPost]
-		public async Task<IActionResult> CreateAsync(StudentDTO studentDTO) {
-			await _studentService.AddStudentAsync(studentDTO);
+		public async Task<IActionResult> CreateAsync(SubjectDTO subjectDTO) {
+			await _subjectService.AddSubjectAsync(subjectDTO);
 			return RedirectToAction("Index");
 		}
 		public async Task<IActionResult> UpdateAsync(int id) {
-			var studentToEdit = await _studentService.GetByIdAsync(id);
-			if (studentToEdit == null) {
+			var subjectToEdit = await _subjectService.GetByIdAsync(id);
+			if (subjectToEdit == null) {
 				return View("NotFound");
 			}
-			return View(studentToEdit);
+			return View(subjectToEdit);
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Update(StudentDTO studentDTO, int id) {
-			await _studentService.UpdateAsync(id, studentDTO);
+		//public async Task<IActionResult> Update(StudentDTO studentDTO, int id) {
+		//	await _studentService.UpdateAsync(id, studentDTO);
+		//	return RedirectToAction("Index");
+		//}
+		public async Task<IActionResult> Update(SubjectDTO subjectDTO) {
+			await _subjectService.UpdateAsync(subjectDTO);
 			return RedirectToAction("Index");
 		}
 		[HttpPost]
 		public async Task<IActionResult> Delete(int id) {
-			var studentToDelete = await _studentService.GetByIdAsync(id);
-			if (studentToDelete == null) {
+			var subjectToDelete = await _subjectService.GetByIdAsync(id);
+			if (subjectToDelete == null) {
 				return View("NotFound");
 			}
-			await _studentService.DeleteAsync(id);
+			await _subjectService.DeleteAsync(id);
 			return RedirectToAction("Index");
 		}
 	}
