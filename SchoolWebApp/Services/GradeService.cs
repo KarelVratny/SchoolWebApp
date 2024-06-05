@@ -23,9 +23,10 @@ namespace SchoolWebApp.Services {
 				Date = DateTime.Today,
 				Mark = gradeDTO.Mark,
 				Topic = gradeDTO.Topic,
-				Student = _context.Students.FirstOrDefault(student => student.Id == gradeDTO.StudentId.Id),
-				Subject = _context.Subjects.FirstOrDefault(subject => subject.Id == gradeDTO.SubjectId.Id),
+				Student =await _context.Students.FirstOrDefaultAsync(student => student.Id == gradeDTO.StudentId),
+				Subject =await _context.Subjects.FirstOrDefaultAsync(subject => subject.Id == gradeDTO.SubjectId),
 			};
+			await _context.AddAsync(gradeToInsert);
 			await _context.SaveChangesAsync();
 		}
 	}
