@@ -11,9 +11,9 @@ namespace SchoolWebApp.Controllers {
 			_gradeService = gradeService;
 		}
 
-		public IActionResult Index() {
-			return View();
-		}
+		//public IActionResult Index() {
+		//	return View();
+		//}
 		public async Task<IActionResult> CreateAsync() {
 			var gradesDropdowsData = await _gradeService.GetGradesDropdowsData();
 			ViewBag.Students = new SelectList(gradesDropdowsData.Students, "Id", "LastName");
@@ -24,6 +24,11 @@ namespace SchoolWebApp.Controllers {
 		public async Task<IActionResult> Create(GradeDTO gradeDTO) {
 			await _gradeService.CreateAsync(gradeDTO);
 			return RedirectToAction("Index");
+		}
+
+		public async Task<IActionResult> Index() {
+			var allGrades = await _gradeService.GetAllViewModelsAsync();
+			return View(allGrades);
 		}
 	}
 }
