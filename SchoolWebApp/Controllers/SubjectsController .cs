@@ -19,8 +19,14 @@ namespace SchoolWebApp.Controllers {
 		}
 		[HttpPost]
 		public async Task<IActionResult> CreateAsync(SubjectDTO subjectDTO) {
-			await _subjectService.AddSubjectAsync(subjectDTO);
-			return RedirectToAction("Index");
+			if (ModelState.IsValid) {
+				await _subjectService.AddSubjectAsync(subjectDTO);
+				return RedirectToAction("Index");
+			}
+			else {
+				return View();
+			}
+
 		}
 		public async Task<IActionResult> UpdateAsync(int id) {
 			var subjectToEdit = await _subjectService.GetByIdAsync(id);
