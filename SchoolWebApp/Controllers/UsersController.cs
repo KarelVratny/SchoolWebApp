@@ -57,19 +57,7 @@ namespace SchoolWebApp.Controllers {
             AppUser userToEdit = await _userManager.FindByIdAsync(id);
             if (userToEdit != null) {
                 IdentityResult validPass;
-                //if (!string.IsNullOrWhiteSpace(email)) {
-                //    userToEdit.Email = email;
-                //}
-                //else {
-                //    ModelState.AddModelError("", "Email cannot be empty");
-                //}
-                //if (!string.IsNullOrWhiteSpace(password)) {
-                //    userToEdit.PasswordHash = _passwordHasher.HashPassword(userToEdit, password);
-                //}
-                //else {
-                //    ModelState.AddModelError("", "Password cannto be empty");
-                //}
-                if (!string.IsNullOrWhiteSpace(email) && !string.IsNullOrEmpty(password)) {
+                if (!string.IsNullOrWhiteSpace(email) && !string.IsNullOrWhiteSpace(password)) {
                     userToEdit.Email = email;
                     validPass = await _passwordValidator.ValidateAsync(_userManager, userToEdit, password);
                     if (validPass.Succeeded) {
@@ -85,7 +73,6 @@ namespace SchoolWebApp.Controllers {
                     else {
                         AddErrors(validPass);
                     }
-
                 }
             }
             else {
