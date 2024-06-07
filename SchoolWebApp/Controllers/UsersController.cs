@@ -7,10 +7,12 @@ namespace SchoolWebApp.Controllers {
     public class UsersController : Controller {
         private UserManager<AppUser> _userManager;
         private IPasswordHasher<AppUser> _passwordHasher;
+        private IPasswordValidator<AppUser> _passwordValidator;
 
-        public UsersController(UserManager<AppUser> userManager, IPasswordHasher<AppUser> passwordHasher) {
+        public UsersController(UserManager<AppUser> userManager, IPasswordHasher<AppUser> passwordHasher, IPasswordValidator<AppUser> passwordValidator) {
             _userManager = userManager;
             _passwordHasher = passwordHasher;
+            _passwordValidator = passwordValidator;
         }
 
         public IActionResult Index() {
@@ -54,6 +56,7 @@ namespace SchoolWebApp.Controllers {
         public async Task<IActionResult> UpdateAsync(string id, string email, string password) {
             AppUser userToEdit = await _userManager.FindByIdAsync(id);
             if (userToEdit != null) {
+                IdentityResult validPass;
                 //if (!string.IsNullOrWhiteSpace(email)) {
                 //    userToEdit.Email = email;
                 //}
@@ -67,13 +70,22 @@ namespace SchoolWebApp.Controllers {
                 //    ModelState.AddModelError("", "Password cannto be empty");
                 //}
                 if (!string.IsNullOrWhiteSpace(email) && !string.IsNullOrEmpty(password)) {
-                    IdentityResult identityResult = await _userManager.UpdateAsync(userToEdit);
-                    if (identityResult.Succeeded) {
-                        return RedirectToAction("Index");
+                    userToEdit.Email = email;
+                    validPass = await _passwordValidator.ValidateAsync(_userManager, userToEdit, password);
+                    if (validPass.Succeeded) {
+                        userToEdit.PasswordHash = _passwordHasher.HashPassword(userToEdit, password);
+                        IdentityResult identityResult = await _userManager.UpdateAsync(userToEdit);
+                        if (identityResult.Succeeded) {
+                            return RedirectToAction("Index");
+                        }
+                        else {
+                            AddErrors(identityResult);
+                        }
                     }
                     else {
-                        AddErrors(identityResult);
+                        AddErrors(validPass);
                     }
+
                 }
             }
             else {
