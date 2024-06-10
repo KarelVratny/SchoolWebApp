@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SchoolWebApp.Models;
 
 namespace SchoolWebApp.Controllers {
+	[Authorize(Roles = "Admin")]
 	public class RoleController : Controller {
 		private RoleManager<IdentityRole> _roleManager;
 		private UserManager<AppUser> _userManager;
