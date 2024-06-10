@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SchoolWebApp.DTO;
 using SchoolWebApp.Services;
 
 namespace SchoolWebApp.Controllers {
+	[Authorize]
 	public class GradesController : Controller {
 		private GradeService _gradeService;
 
