@@ -43,7 +43,7 @@ namespace SchoolWebApp.Services {
 
 		private static StudentDTO ModelToDto(Student student) {
 			return new StudentDTO {
-				DateOfBrirth = student.DateOfBrirth,
+				DateOfBirth = student.DateOfBrirth,
 				FirstName = student.FirstName,
 				LastName = student.LastName,
 				Id = student.Id
@@ -52,7 +52,7 @@ namespace SchoolWebApp.Services {
 
 		private static Student DtoToModel(StudentDTO studentDto) {
 			return new Student {
-				DateOfBrirth = studentDto.DateOfBrirth,
+				DateOfBrirth = studentDto.DateOfBirth,
 				FirstName = studentDto.FirstName,
 				LastName = studentDto.LastName,
 				Id = studentDto.Id
