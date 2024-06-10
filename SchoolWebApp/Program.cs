@@ -26,6 +26,11 @@ builder.Services.Configure<IdentityOptions>(options => {
     options.Password.RequireUppercase = true;
     options.Password.RequireLowercase = true;
 });
+builder.Services.ConfigureApplicationCookie(options => {
+    options.Cookie.Name = ".AspNetCore.Identity.Application";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+    options.SlidingExpiration = true;
+});
 
 var app = builder.Build();
 

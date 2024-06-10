@@ -7,5 +7,6 @@ namespace SchoolWebApp.ViewModels {
         [Required]
         public string? Password { get; set; }
         public string? ReturnUrl { get; set; }
+        public bool Remember { get; set; }
     }
 }
