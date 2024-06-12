@@ -11,7 +11,9 @@ builder.Services.AddControllersWithViews();
 
 //Connection string
 builder.Services.AddDbContext<ApplicationDbContext>(options => {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDbConnection"));
+    //options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDbConnection"));
+	options.UseSqlServer(builder.Configuration.GetConnectionString("AzureDbConnection"));
+
 });
 
 //Predani kontroleru instanci service
