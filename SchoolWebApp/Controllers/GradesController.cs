@@ -5,7 +5,6 @@ using SchoolWebApp.DTO;
 using SchoolWebApp.Services;
 
 namespace SchoolWebApp.Controllers {
-	[Authorize]
 	public class GradesController : Controller {
 		private GradeService _gradeService;
 
@@ -16,6 +15,7 @@ namespace SchoolWebApp.Controllers {
 		//public IActionResult Index() {
 		//	return View();
 		//}
+		[Authorize(Roles = "Teacher, Admin")]
 		public async Task<IActionResult> CreateAsync() {
 			await FillSelectsAsync();
 			return View();
@@ -28,16 +28,17 @@ namespace SchoolWebApp.Controllers {
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Teacher, Admin")]
 		public async Task<IActionResult> Create(GradeDTO gradeDTO) {
 			await _gradeService.CreateAsync(gradeDTO);
 			return RedirectToAction("Index");
 		}
-
+		[Authorize]
 		public async Task<IActionResult> Index() {
 			var allGrades = await _gradeService.GetAllViewModelsAsync();
 			return View(allGrades);
 		}
-
+		[Authorize(Roles = "Teacher, Admin")]
 		public async Task<IActionResult> Update(int id) {
 			var gradeToEdit = await _gradeService.GetByIdAsync(id);
 			if (gradeToEdit == null) {
@@ -49,12 +50,14 @@ namespace SchoolWebApp.Controllers {
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Teacher, Admin")]
 		public async Task<IActionResult> Update(int id, GradeDTO grade) {
 			await _gradeService.UpdateAsync(id, grade);
 			return RedirectToAction("Index");
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Teacher, Admin")]
 		public async Task<IActionResult> DeleteAsync(int id) {
 			await _gradeService.DeleteAsync(id);
 			return RedirectToAction("Index");
