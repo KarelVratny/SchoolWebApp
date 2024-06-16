@@ -6,6 +6,6 @@
 <div class="text-center">
 	<h1 class="display-4">Welcome @Model</h1>
 	@if (User?.Identity?.IsAuthenticated ?? false) {
-		<a asp-controller="Account" asp-action="Logout" class="btn btn-danger">ogout</a>
+		<a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Logout</a>
 	}
 </div>
